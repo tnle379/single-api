@@ -1,0 +1,6 @@
+requests
+fastapi
+uvicorn
+argparse
+jsonschema
+validators

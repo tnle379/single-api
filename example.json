@@ -1,0 +1,16 @@
+{
+    "submissions":[
+        {
+            "name": "Elevation of Privilege",
+            "type": "Platform",
+            "description": "Security Feature Bypass",
+            "date": "2022-11-21"
+        },
+        {
+            "name": "Abnormal Request Rate",
+            "type": "Platform",
+            "description": "Security Feature Bypass",
+            "date": "2022-03-31"
+        }
+    ]
+}
