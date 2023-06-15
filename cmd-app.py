@@ -79,11 +79,10 @@ def get_request(url: str):
         response = requests.get(url)
         response.raise_for_status()
 
-        return response.status_code, response.text
+        return response.text
     
-    except requests.exceptions.ConnectionError as conerr:
-        print("Connection error!! You might have not started your API server.")
-        raise
+    except requests.exceptions.ConnectionError as e:
+        raise Exception("Connection error!! You might have not started your API server.")
 
 # send POST request
 def post_request(url: str, filename: str):
@@ -92,27 +91,24 @@ def post_request(url: str, filename: str):
         response = requests.post(url=url, json=body)
         response.raise_for_status()
 
-        return response.status_code, response.text
+        return response.text
     
-    except requests.exceptions.ConnectionError as conerr:
-        print("Connection error!! You might have not started your API server.")
-        raise
-
+    except requests.exceptions.ConnectionError as e:
+        raise Exception("Connection error!! You might have not started your API server.")
 
 # make connection with API to get objects
 def get_objects(type: str, url: str):
-    status_code = None
     body = None
     if type == 'GET':
-        status_code, body = get_request(url=url)
+        body = get_request(url=url)
     
     elif type == 'POST':
         if args.filename is None:
             parser.error("POST request requires a --filename option. Check -h or --help.")
-        status_code, body = post_request(url=url, filename = args.filename)
+        body = post_request(url=url, filename = args.filename)
 
     data = json.loads(body)["results"]
-    return status_code, sort_objects_by_date(data_list=data)
+    return sort_objects_by_date(data_list=data)
 
 # sort the dictionary based on "date" key
 def sort_objects_by_date(data_list: list):
@@ -120,9 +116,7 @@ def sort_objects_by_date(data_list: list):
     return data_list
 
 def main():
-    status_code, sorted_data = get_objects(type=args.type, url=args.url)
-    print(f'status code: {status_code}')
-    print(type(sorted_data))
+    sorted_data = get_objects(type=args.type, url=args.url)
     print(f'{sorted_data}')
 
 main()
