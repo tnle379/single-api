@@ -3,7 +3,7 @@
 ```sh
 pip install -r requirements.txt
 ```
-## run api
+## run api (fastapi) using uvicorn
 ```sh
 uvicorn api:app --reload
 ```
